@@ -18,7 +18,6 @@ const board = []; // array of rows, each row is array of cells  (board[y][x])
  */
 
 function makeBoard() {
-  // TODO: set "board" to empty HEIGHT x WIDTH matrix array. COMPLETE
   for (let y = 0; y < HEIGHT; y++) {
     board.push([]);
     for (let x = 0; x < WIDTH; x++) {
@@ -26,7 +25,7 @@ function makeBoard() {
     }
   }
   console.log(board);
-  return board;
+  return board; //not needed
 }
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
@@ -34,13 +33,11 @@ function makeBoard() {
 function makeHtmlBoard() {
   const htmlBoard = document.getElementById("board");
 
-  // TODO: add comment for this code: COMPLETE
   // Create top clickable row in HTML
   const top = document.createElement("tr");
   top.setAttribute("id", "column-top");
   top.addEventListener("click", handleClick);
 
-  // TODO: add comment for this code: COMPLETE
   // Set id for each cell in top row
   for (let x = 0; x < WIDTH; x++) {
     const headCell = document.createElement("td");
@@ -53,19 +50,14 @@ function makeHtmlBoard() {
   // uses HEIGHT to create table rows
   // uses WIDTH to create table cells for each row
   for (var y = 0; y < HEIGHT; y++) {
-    // TODO: Create a table row element and assign to a "row" variable
     const row = document.createElement("tr");
 
     for (var x = 0; x < WIDTH; x++) {
-      // TODO: Create a table cell element and assign to a "cell" variable
       const cell = document.createElement("td");
-      // TODO: add an id, c-y-x, to the above table cell element
       // you'll use this later, so make sure you use c-y-x
       cell.setAttribute("id", `c-${y}-${x}`);
-      // TODO: append the table cell to the table row
       row.append(cell);
     }
-    // TODO: append the row to the html board
     htmlBoard.append(row);
   }
 }
@@ -81,6 +73,7 @@ function findSpotForCol(x) {
 
 function placeInTable(y, x) {
   // TODO: make a div and insert into correct table cell
+  board.
 }
 
 /** endGame: announce game end */
