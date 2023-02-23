@@ -49,10 +49,10 @@ function makeHtmlBoard() {
   // dynamically creates the main part of html board
   // uses HEIGHT to create table rows
   // uses WIDTH to create table cells for each row
-  for (var y = 0; y < HEIGHT; y++) {
+  for (let y = 0; y < HEIGHT; y++) {
     const row = document.createElement("tr");
 
-    for (var x = 0; x < WIDTH; x++) {
+    for (let x = 0; x < WIDTH; x++) {
       const cell = document.createElement("td");
       // you'll use this later, so make sure you use c-y-x
       cell.setAttribute("id", `c-${y}-${x}`);
@@ -72,8 +72,14 @@ function findSpotForCol(x) {
 /** placeInTable: update DOM to place piece into HTML table of board */
 
 function placeInTable(y, x) {
+  //updates board array with new piece
+  board[y].splice(x, 1, currPlayer);
+
   // TODO: make a div and insert into correct table cell
-  board.
+  const piece = document.createElement(div);
+  piece.className.add("piece", `p${currPlayer}`);
+  const cell = getElementById(`c-${y}-${x}`);
+  cell.append(piece);
 }
 
 /** endGame: announce game end */
