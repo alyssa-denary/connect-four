@@ -24,8 +24,6 @@ function makeBoard() {
       board[y].push(null);
     }
   }
-  console.log(board);
-  return board; //not needed
 }
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
@@ -66,7 +64,8 @@ function makeHtmlBoard() {
 
 function findSpotForCol(x) {
   // TODO: write the real version of this, rather than always returning 5
-  for (let y = HEIGHT - 1; y <= 0; y--) {
+  for (let y = HEIGHT - 1; y >= 0; y--) {
+    console.log(board[y][x], "y", y);
     if (board[y][x] === null) return y;
   }
   return null;
@@ -75,8 +74,6 @@ function findSpotForCol(x) {
 /** placeInTable: update DOM to place piece into HTML table of board */
 
 function placeInTable(y, x) {
-  // TODO: make a div and insert into correct table cell
-  console.log("y",y,"x",x);
   const piece = document.createElement("div");
   piece.classList.add("piece", `p${currPlayer}`);
   const cell = document.getElementById(`c-${y}-${x}`);
@@ -93,7 +90,7 @@ function endGame(msg) {
 
 function handleClick(evt) {
   // get x from ID of clicked cell
-  const x = +(evt.target.id.slice(4)); // What does the plus sign do here?
+  const x = +evt.target.id.slice(4); // What does the plus sign do here?
 
   // get next spot in column (if none, ignore click)
   const y = findSpotForCol(x);
@@ -103,7 +100,7 @@ function handleClick(evt) {
 
   // place piece in board and add to HTML table
   // TODO: add line to update in-memory board
-  //board[y].splice(x, 1, currPlayer);
+  board[y].splice(x, 1, currPlayer);
   placeInTable(y, x);
 
   // check for win
@@ -119,7 +116,7 @@ function handleClick(evt) {
 
   // switch players
   // TODO: switch currPlayer 1 <-> 2
-  currPlayer === 1 ? currPlayer = 2 : currPlayer = 1;
+  currPlayer === 1 ? (currPlayer = 2) : (currPlayer = 1);
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
@@ -165,8 +162,8 @@ function checkForWin() {
 
 /** Checks if entire board is filled */
 function checkIfFilled() {
-  for(let y = 0; y < HEIGHT; y++) {
-    if (!(board[y].every(n => n !== null))) return false;
+  for (let y = 0; y < HEIGHT; y++) {
+    if (!board[y].every((n) => n !== null)) return false;
   }
   return true;
 }
