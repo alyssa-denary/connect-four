@@ -63,9 +63,7 @@ function makeHtmlBoard() {
 /** findSpotForCol: given column x, return bottom empty y (null if filled) */
 
 function findSpotForCol(x) {
-  // TODO: write the real version of this, rather than always returning 5
   for (let y = HEIGHT - 1; y >= 0; y--) {
-    console.log(board[y][x], "y", y);
     if (board[y][x] === null) return y;
   }
   return null;
@@ -84,6 +82,7 @@ function placeInTable(y, x) {
 
 function endGame(msg) {
   // TODO: pop up alert message
+  alert(msg);
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -99,7 +98,6 @@ function handleClick(evt) {
   }
 
   // place piece in board and add to HTML table
-  // TODO: add line to update in-memory board
   board[y].splice(x, 1, currPlayer);
   placeInTable(y, x);
 
@@ -108,9 +106,10 @@ function handleClick(evt) {
     return endGame(`Player ${currPlayer} won!`);
   }
 
+
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
-  if (checkIfFilled) {
+  if (checkIfFilled()) {
     return endGame("Game tied");
   }
 
@@ -130,6 +129,14 @@ function checkForWin() {
   function _win(cells) {
     // TODO: Check four cells to see if they're all legal & all color of current
     // player
+    return cells.every(
+      (coordinates) =>
+        coordinates[0] < HEIGHT &&
+        coordinates[0] >= 0 &&
+        coordinates[1] < WIDTH &&
+        coordinates[1] >= 0 &&
+        board[coordinates[0]][coordinates[1]] === currPlayer
+    );
   }
 
   // using HEIGHT and WIDTH, generate "check list" of coordinates
@@ -148,9 +155,24 @@ function checkForWin() {
         [y, x + 2],
         [y, x + 3],
       ];
-      let vert; // y + 1, y + 2 etc.
-      let diagDL; // y + 1, x -1
-      let diagDR; // y + 1, x + 1
+      let vert = [
+        [y, x],
+        [y + 1, x],
+        [y + 2, x],
+        [y + 3, x],
+      ];
+      let diagDL = [
+        [y, x],
+        [y + 1, x - 1],
+        [y + 2, x - 2],
+        [y + 3, x - 3],
+      ];
+      let diagDR = [
+        [y, x],
+        [y + 1, x + 1],
+        [y + 2, x + 2],
+        [y + 3, x + 3],
+      ];
 
       // find winner (only checking each win-possibility as needed)
       if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
@@ -158,6 +180,7 @@ function checkForWin() {
       }
     }
   }
+  // return false;
 }
 
 /** Checks if entire board is filled */
