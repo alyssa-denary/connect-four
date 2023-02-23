@@ -72,13 +72,11 @@ function findSpotForCol(x) {
 /** placeInTable: update DOM to place piece into HTML table of board */
 
 function placeInTable(y, x) {
-  //updates board array with new piece
-  board[y].splice(x, 1, currPlayer);
-
   // TODO: make a div and insert into correct table cell
-  const piece = document.createElement(div);
-  piece.className.add("piece", `p${currPlayer}`);
-  const cell = getElementById(`c-${y}-${x}`);
+  console.log("y",y,"x",x);
+  const piece = document.createElement("div");
+  piece.classList.add("piece", `p${currPlayer}`);
+  const cell = document.getElementById(`c-${y}-${x}`);
   cell.append(piece);
 }
 
@@ -92,16 +90,19 @@ function endGame(msg) {
 
 function handleClick(evt) {
   // get x from ID of clicked cell
-  var x = +evt.target.id; // What does the plus sign do here?
+  console.log(evt.target.id);
+  console.log(+evt.target.id);
+  const x = +(evt.target.id.slice(4)); // What does the plus sign do here?
 
   // get next spot in column (if none, ignore click)
-  var y = findSpotForCol(x);
+  const y = findSpotForCol(x);
   if (y === null) {
     return;
   }
 
   // place piece in board and add to HTML table
   // TODO: add line to update in-memory board
+  board[y].splice(x, 1, currPlayer);
   placeInTable(y, x);
 
   // check for win
